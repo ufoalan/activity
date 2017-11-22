@@ -3,8 +3,8 @@
   "type": "flogo:activity",
   "ref": "github.com/ufoalan/activity/new_counter",
   "version": "0.0.1",
-  "title": "Control GPIO",
-  "description": "Control raspberry gpio",
+  "title": "Control EV3",
+  "description": "Control Lego motor",
   "homepage": "https://github.com/ufoalan/activity/tree/master/new_counter",
   "inputs":[
     {
