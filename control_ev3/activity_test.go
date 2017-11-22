@@ -1,4 +1,4 @@
-package new_counter
+package control_ev3
 
 import (
 	"testing"
@@ -41,7 +41,7 @@ func TestReadState(t *testing.T) {
 	tc := test.NewTestActivityContext(getActivityMetadata())
 
 	//setup attrs
-	tc.SetInput("method", "Read State")
+	tc.SetInput("method", "start")
 	tc.SetInput("pin number", 10)
 	//eval
 	_, err := act.Eval(tc)
