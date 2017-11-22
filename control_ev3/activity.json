@@ -11,7 +11,7 @@
       "name": "method",
       "type": "string",
       "required": true,
-      "allowed" : ["start", "stop", "auto"]
+      "allowed" : ["start", "stop", "auto", "sleep"]
     },
     {
       "name": "value",

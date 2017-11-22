@@ -70,7 +70,7 @@ func (a *GPIOActivity) Eval(context activity.Context) (done bool, err error) {
 	}
 
 	//get pinNumber
-	value, ok := context.GetInput(value).(int)
+	sleepDuration, ok := context.GetInput(value).(int)
 
 	if !ok {
 		return true, errors.New("Pin number must exist")
@@ -104,8 +104,8 @@ func (a *GPIOActivity) Eval(context activity.Context) (done bool, err error) {
 	case stop:
                 outA.Command("stop")
                 checkErrors(outA)
-	case stop:
-                time.Sleep(time.Second * value)
+	case sleep:
+                time.Sleep(time.Second * time.Duration(sleepDuration))
 	case auto:
                 for i := 0; i < 2; i++ {
 
