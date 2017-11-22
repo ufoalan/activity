@@ -1,6 +1,7 @@
 package motor
 
 import (
+	"strconv"
 	"sync"                                 
         "time"         
         "fmt"                                                                          
@@ -71,7 +72,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error)  {
         }
  
         // Set the result as part of the context
-        context.SetOutput("result", "The Flogo engine says motor "+action+" at "+speed+" speed")
+        context.SetOutput("result", "The Flogo engine says motor "+action+" at "+strconv.Itoa(speed)+" speed")
  
         // Signal to the Flogo engine that the activity is completed
  
