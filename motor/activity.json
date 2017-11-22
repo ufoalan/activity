@@ -1,13 +1,17 @@
 {
-  "name": "motor",
+  "name": "HelloWorld",
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "author": "Your Name <you.name@example.org>",
+  "author": "Alan Lee <allee@tibco.com>",
   "inputs":[
     {
-      "name": "input",
+      "name": "action",
       "type": "string"
+    },
+    {
+      "name": "speed",
+      "type": "integer"
     }
   ],
   "outputs": [
