@@ -17,6 +17,7 @@ var log = logger.GetLogger("activity-tibco-rest")
 const (
 	method         = "method"
 	pinNumber      = "pinNumber"
+	value          = "value"
 	directionState = "direction"
 	state          = "state"
 	direction      = "Direction"
@@ -26,6 +27,7 @@ const (
 	start          = "start"
 	stop           = "stop"
 	auto           = "auto"
+	sleep          = "sleep"
 
 	input = "Input"
 	//output = "Output"
@@ -68,13 +70,13 @@ func (a *GPIOActivity) Eval(context activity.Context) (done bool, err error) {
 	}
 
 	//get pinNumber
-	ivPinNumber, ok := context.GetInput(pinNumber).(int)
+	value, ok := context.GetInput(value).(int)
 
 	if !ok {
 		return true, errors.New("Pin number must exist")
 	}
 
-	log.Debugf("Method '%s' and pin number '%d'", methodInput, ivPinNumber)
+	log.Debugf("Method '%s' and pin number '%d'", methodInput, value)
 	//Open pin
 	//openErr := rpio.Open()
 	//if openErr != nil {
@@ -102,6 +104,8 @@ func (a *GPIOActivity) Eval(context activity.Context) (done bool, err error) {
 	case stop:
                 outA.Command("stop")
                 checkErrors(outA)
+	case stop:
+                time.Sleep(time.Second * value)
 	case auto:
                 for i := 0; i < 2; i++ {
 

@@ -14,7 +14,7 @@
       "allowed" : ["start", "stop", "auto"]
     },
     {
-      "name": "pinNumber",
+      "name": "value",
       "type": "integer",
       "required": true
     },
