@@ -2,7 +2,7 @@ package motor
 
 import (
 	"strconv"
-	"sync"                                 
+	//"sync"                                 
         "time"         
         "fmt"                                                                          
          
@@ -10,6 +10,9 @@ import (
         "github.com/TIBCOSoftware/flogo-lib/logger"
         "github.com/ev3go/ev3dev"    
 )
+
+// log is the default package logger
+var log = logger.GetLogger("activity-tibco-rest")
 
 // MyActivity is a stub for your Activity implementation
 type MyActivity struct {
@@ -48,10 +51,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error)  {
         }                                                                           
         maxMedium := outA.MaxSpeed()
                                                          
-        if (counterName == "start") {   
+        if (action == "start") {   
                 outA.SetSpeedSetpoint(50 * maxMedium / 100).Command("run-forever")   
                 checkErrors(outA)
-        } else if (counterName == "stop") {                                                  
+        } else if (action == "stop") {                                                  
                 outA.Command("stop")
                 checkErrors(outA)
         } else {
@@ -91,7 +94,7 @@ func checkErrors(devs ...ev3dev.Device) {
                         if aErr != nil {                                           
                                 drv = fmt.Sprintf("(missing port address: %v)", aErr)
                         }                    
-                        log.Fatalf("motor error for %s:%s on port %s: %v", d, drv, addr, err)
+                        log.Debugf("motor error for %s:%s on port %s: %v", d, drv, addr, err)
                 }                     
         }                                
 }
