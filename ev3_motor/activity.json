@@ -1,0 +1,23 @@
+{
+  "name": "ev3_motor",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "control ev3 motor",
+  "author": "Alan Lee <you.name@example.org>",
+  "inputs":[
+    {
+      "name": "salutation",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "result",
+      "type": "string"
+    }
+  ]
+}
