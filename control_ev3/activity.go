@@ -2,7 +2,8 @@ package control_ev3
 
 import (
 	"errors"
-	"strings"
+	"fmt"
+	//"strings"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
@@ -21,6 +22,9 @@ const (
 	setState       = "Set State"
 	readState      = "Read State"
 	pull           = "Pull"
+	start          = "start"
+	stop           = "stop"
+	auto           = "auto"
 
 	input = "Input"
 	//output = "Output"
@@ -77,7 +81,7 @@ func (a *GPIOActivity) Eval(context activity.Context) (done bool, err error) {
 	//	return true, errors.New("Open RPIO error: " + openErr.Error())
 	//}
 
-	pin := rpio.Pin(ivPinNumber)
+	//pin := rpio.Pin(ivPinNumber)
 
         outA, err := ev3dev.TachoMotorFor("outA", "lego-ev3-l-motor")
         if err != nil {
