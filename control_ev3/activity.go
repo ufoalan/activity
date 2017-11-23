@@ -18,6 +18,7 @@ const (
 	method         = "method"
 	pinNumber      = "pinNumber"
 	value          = "value"
+	port           = "port"
 	directionState = "direction"
 	state          = "state"
 	direction      = "Direction"
