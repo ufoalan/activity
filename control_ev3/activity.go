@@ -73,10 +73,16 @@ func (a *GPIOActivity) Eval(context activity.Context) (done bool, err error) {
 	sleepDuration, ok := context.GetInput(value).(int)
 
 	if !ok {
-		return true, errors.New("Pin number must exist")
+		return true, errors.New("Value must exist")
 	}
 
-	log.Debugf("Method '%s' and pin number '%d'", methodInput, value)
+	portInput := context.GetInput(port)
+	ivport, ok := portInput.(string)
+	if !ok {
+		return true, errors.New("Port field not set.")
+	}
+
+	log.Debugf("Method '%s', Port '%s' and pin number '%d'", methodInput, portInput, value)
 	//Open pin
 	//openErr := rpio.Open()
 	//if openErr != nil {
@@ -86,40 +92,44 @@ func (a *GPIOActivity) Eval(context activity.Context) (done bool, err error) {
 
 	//pin := rpio.Pin(ivPinNumber)
 
-        outA, err := ev3dev.TachoMotorFor("outA", "lego-ev3-l-motor")
+        //outA, err := ev3dev.TachoMotorFor("outA", "lego-ev3-l-motor")
+        out, err := ev3dev.TachoMotorFor(ivport, "lego-ev3-l-motor")
         if err != nil {
-                log.Debugf("failed to find large motor on outA: %v", err)
+                log.Debugf("failed to find large motor on %s: %v", ivport, err)
         }
-        err = outA.SetStopAction("brake").Err()
+        //err = outA.SetStopAction("brake").Err()
+        err = out.SetStopAction("brake").Err()
         if err != nil {
-                log.Debugf("failed to set brake stop for large motor on outA: %v", err)
+                //log.Debugf("failed to set brake stop for large motor on outA: %v", err)
+                log.Debugf("failed to set brake stop for large motor on %s: %v", ivport, err)
         }
-        maxMedium := outA.MaxSpeed()
+        //maxMedium := outA.MaxSpeed()
+        maxMedium := out.MaxSpeed()
 
 
 	switch ivmethod {
 	case start:
-                outA.SetSpeedSetpoint(50 * maxMedium / 100).Command("run-forever")
-                checkErrors(outA)
+                out.SetSpeedSetpoint(50 * maxMedium / 100).Command("run-forever")
+                checkErrors(out)
 	case stop:
-                outA.Command("stop")
-                checkErrors(outA)
+                out.Command("stop")
+                checkErrors(out)
 	case sleep:
                 time.Sleep(time.Second * time.Duration(sleepDuration))
 	case auto:
                 for i := 0; i < 2; i++ {
 
                         // Run medium motor on outA at speed 50, wait for 0.5 second and then brake.
-                        outA.SetSpeedSetpoint(50 * maxMedium / 100).Command("run-forever")
+                        out.SetSpeedSetpoint(50 * maxMedium / 100).Command("run-forever")
                         time.Sleep(time.Second / 2)
-                        outA.Command("stop")
-                        checkErrors(outA)
+                        out.Command("stop")
+                        checkErrors(out)
 
                         // Run medium motor on outA at speed -75, wait for 0.5 second and then brake.
-                        outA.SetSpeedSetpoint(-75 * maxMedium / 100).Command("run-forever")
+                        out.SetSpeedSetpoint(-75 * maxMedium / 100).Command("run-forever")
                         time.Sleep(time.Second / 2)
-                        outA.Command("stop")
-                        checkErrors(outA)
+                        out.Command("stop")
+                        checkErrors(out)
                 }
 	default:
 		log.Errorf("Cannot found method %s ", ivmethod)

@@ -19,9 +19,9 @@
       "required": true
     },
     {
-      "name": "direction",
+      "name": "port",
       "type": "string",
-      "allowed" : ["Input", "Output"]
+      "allowed" : ["outA", "outB", "outC", "outD"]
     },
     {
       "name": "state",
