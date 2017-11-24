@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"time"
-	//"strings"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
@@ -84,27 +83,15 @@ func (a *GPIOActivity) Eval(context activity.Context) (done bool, err error) {
 	}
 
 	log.Debugf("Method '%s', Port '%s' and pin number '%d'", methodInput, portInput, value)
-	//Open pin
-	//openErr := rpio.Open()
-	//if openErr != nil {
-	//	log.Errorf("Open RPIO error: %+v", openErr.Error())
-	//	return true, errors.New("Open RPIO error: " + openErr.Error())
-	//}
 
-	//pin := rpio.Pin(ivPinNumber)
-
-        //outA, err := ev3dev.TachoMotorFor("outA", "lego-ev3-l-motor")
         out, err := ev3dev.TachoMotorFor(ivport, "lego-ev3-l-motor")
         if err != nil {
                 log.Debugf("failed to find large motor on %s: %v", ivport, err)
         }
-        //err = outA.SetStopAction("brake").Err()
         err = out.SetStopAction("brake").Err()
         if err != nil {
-                //log.Debugf("failed to set brake stop for large motor on outA: %v", err)
                 log.Debugf("failed to set brake stop for large motor on %s: %v", ivport, err)
         }
-        //maxMedium := outA.MaxSpeed()
         maxMedium := out.MaxSpeed()
 
 

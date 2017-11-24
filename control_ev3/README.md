@@ -1,33 +1,32 @@
-# tibco-gpio
-This activity provides your flogo application the ability to control raspberry pi GPIO
+# tibco-lego-ev3
+This activity provides your flogo application the ability to control LEGO mindstorm EV3 motor
 
 ## Installation
 
 ```bash
-flogo add activity github.com/TIBCOSoftware/flogo-contrib/activity/gpio
+flogo add activity github.com/ufoalan/activity/control_ev3
 ```
 
 ## Schema
 Inputs and Outputs:
 
 ```json
-{
   "inputs":[
     {
       "name": "method",
       "type": "string",
       "required": true,
-      "allowed" : ["Direction", "Set State", "Read State", "Pull"]
+      "allowed" : ["start", "stop", "auto", "sleep"]
     },
     {
-      "name": "pinNumber",
+      "name": "value",
       "type": "integer",
       "required": true
     },
     {
-      "name": "direction",
+      "name": "port",
       "type": "string",
-      "allowed" : ["Input", "Output"]
+      "allowed" : ["outA", "outB", "outC", "outD"]
     },
     {
       "name": "state",
@@ -47,73 +46,78 @@ Inputs and Outputs:
       "type": "integer"
     }
   ]
-}
 ```
 ## Settings
 | Setting     | Description    |
 |:------------|:---------------|
-| method      | The method to take action for GPIO|         
-| pinNumber   | The pin number   |
-| direction   | The direction of pin number, either Input or Output |
-| state       | The state of pin number, either high or low |
-| Pull        | Pull the pin number to Up, Down and Off |
+| method      | The method to take action for LEGO mindstorm EV3 large motor|         
+| value       | The duration for "sleep" method |
+| port        | The output port on EV3 you want to control |
+| state       | Reserved |
+| Pull        | Reserved |
 
 
 ## Configuration Examples
-### Get pin state
-Get specific pin 23's state
+### Start motor
+Start large motor on port outA
 ```json
   "attributes": [
           {
             "name": "method",
-            "value": "Read State",
+            "value": "start",
             "type": "string"
           },
           {
-            "name": "pinNumber",
-            "value": "23",
-            "type": "integer"
-          }
-        ]
-```
-### Set pin state
-Set pin state to High
-```json
-  "attributes": [
-          {
-            "name": "method",
-            "value": "Set State",
-            "type": "string"
-          },
-          {
-            "name": "pinNumber",
-            "value": "23",
-            "type": "integer"
-          },
-          {
-            "name": "state",
-            "value": "High",
+            "name": "port",
+            "value": "outA",
             "type": "string"
           }
         ]
 ```
-### Change pin's direction
-Change pin's direction to Output
+### Stop motor
+Stop large motor on port outA
 ```json
   "attributes": [
           {
             "name": "method",
-            "value": "Direction",
+            "value": "stop",
             "type": "string"
           },
           {
-            "name": "pinNumber",
-            "value": "23",
-            "type": "integer"
+            "name": "port",
+            "value": "outA",
+            "type": "string"
+          }
+        ]
+```
+### Sleep function
+Sleep function
+```json
+  "attributes": [
+          {
+            "name": "method",
+            "value": "sleep",
+            "type": "string"
           },
           {
-            "name": "direction",
-            "value": "Output",
+            "name": "value",
+            "value": "2",
+            "type": "integer"
+          }
+        ]
+```
+### Start large motor with auto mode
+Start large motor on port outA with auto mode (turn -> sleep 2 sec -> turn again -> stop)
+```json
+  "attributes": [
+          {
+            "name": "method",
+            "value": "auto",
+            "type": "string"
+          },
+          {
+            "name": "port",
+            "value": "outA",
             "type": "string"
           }
         ]
